@@ -3,5 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "run": "node src/main.js"
   }
 }
