@@ -4,7 +4,7 @@ simple script to generate metadata for 300x300 (90k) plot
 
 ## PRE-REQUISITE
 
-to be able to upload 90k json files to IPFS in a directory and 
+to be able to upload 90k json files to IPFS in a directory
 - Download IPFS Desktop App https://docs.ipfs.io/install/ipfs-desktop/ (for UI Experience)
 
 to add ipfs.exe to your PATH
@@ -34,7 +34,7 @@ Add-Content $PROFILE "`n[System.Environment]::SetEnvironmentVariable('PATH',`$En
 cd ~
 ipfs --version
 ```
-## Getting started
+## GETTING STARTED
 - Clone this repository
 ```sh
 git clone https://github.com/grsLammy/json-gen-with-xy
