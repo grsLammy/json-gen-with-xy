@@ -2,7 +2,7 @@
 import fs from "fs"
 
 const main = async () => {
-  let size = 200
+  let size = 300
   const dir = "./plot_metadata"
   try {
     if (!fs.existsSync(dir)) {
