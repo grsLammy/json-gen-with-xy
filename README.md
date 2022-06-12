@@ -8,7 +8,7 @@ to be able to upload 90k json files to IPFS in a directory
 - Download IPFS Desktop App https://docs.ipfs.io/install/ipfs-desktop/ (for UI Experience)
 
 to add ipfs.exe to your PATH
-- go to the path where your IPFS is installed (ipfs.exe)
+- go to the path where your IPFS Desktop App is installed (ipfs.exe)
 - Save the current working directory into a temporary variable
 ```sh
 $GO_IPFS_LOCATION = pwd
