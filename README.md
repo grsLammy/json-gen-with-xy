@@ -51,7 +51,7 @@ yarn
 ## Usage
 - Execute the script to generate your metadata for 300x300 (90k) plot
 ```javascript
-npm ./src/generate.js
+node ./src/generate.js
 ```
 - Execute this cli cmd to upload it to IPFS
 ```sh
