@@ -53,7 +53,7 @@ yarn
 ```javascript
 node ./src/generate.js
 ```
-- Execute this cli cmd to upload it to IPFS
+- Execute the cli cmd to upload it to IPFS
 ```sh
 ipfs add -r --cid-version=1 "absolutePathToDirectory"
 ```
