@@ -16,6 +16,7 @@
     "fs": "^0.0.1-security",
     "got": "^12.1.0",
     "ipfs-add-folder": "^1.0.10",
+    "ipfs-client": "^0.8.1",
     "ipfs-http-client": "^57.0.1",
     "nft.storage": "^6.3.0",
     "path": "^0.12.7",

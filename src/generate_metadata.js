@@ -2,7 +2,7 @@
 import fs from "fs"
 
 const main = async () => {
-  let size = 300
+  let size = 2
   const dir = "./plot_metadata"
   try {
     if (!fs.existsSync(dir)) {
@@ -15,7 +15,8 @@ const main = async () => {
         y: Math.floor(i / size),
       }
       const dataStream = JSON.stringify(rawData, null, 2)
-      fs.writeFileSync(`./plot_metadata/${i}.json`, dataStream, "utf-8")
+      console.log(dataStream)
+      //fs.writeFileSync(`./plot_metadata/${i}.json`, dataStream, "utf-8")
     }
     console.log("\nMETADATA GENERATED SUCCESSFULLY")
   } catch (error) {

@@ -1,44 +1,37 @@
-import fs from "fs"
-import FormData from "form-data"
-import rfs from "recursive-fs"
-import basePathConverter from "base-path-converter"
-import got from "got"
-import dotenv from "dotenv"
-dotenv.config()
+"use strict"
+import { streamFiles } from "./util/stream_files"
+import { create as ipfsClient } from "ipfs-client"
 
-const jwt = process.env.PINATA_JWT
-const pinataApiKey = process.env.PINATA_API_KEY
-const pinataSecretApiKey = process.env.PINATA_SECRET_API_KEY
-
-async function pinDirectoryToPinata() {
-  const url = "https://api.pinata.cloud/pinning/pinFileToIPFS"
-  const src = "./plot_metadata"
-  var status = 0
+const upload = async () => {
   try {
-    const { dirs, files } = await rfs.read(src)
-    let data = new FormData()
-    for (const file of files) {
-      data.append(`file`, fs.readFileSync(file), {
-        filepath: basePathConverter(src, file),
-      })
-    }
-    const response = await got(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-        pinata_api_key: pinataApiKey,
-        pinata_secret_api_key: pinataSecretApiKey,
-      },
-      body: data,
+    let ipfs
+    const grpcAPI = process.env.GRPC_API
+    const httpAPI = process.env.HTTP_API
+    ipfs = ipfsClient({
+      grpc: grpcAPI,
+      http: httpAPI,
     })
-    // .on("uploadProgress", (progress) => {
-    //   console.log("progress: ", progress)
-    // })
 
-    console.log("response: ", JSON.parse(response.body))
+    console.log(`Connecting to ${grpcAPI} using ${httpAPI} as fallback`)
+    const id = await ipfs.id()
+    console.log(`Daemon active\nID: ${id.id}`)
+
+    for await (const file of ipfs.addAll(streamFiles(), {
+      wrapWithDirectory: true,
+      // this is just to show the interleaving of uploads and progress events
+      // otherwise we'd have to upload 50 files before we see any response from
+      // the server. do not specify this so low in production as you'll have
+      // greatly degraded import performance
+      fileImportConcurrency: 1,
+      progress: (bytes, file) => {
+        console.log(`File progress ${file} ${bytes}`)
+      },
+    }))
+      console.log(`Added file: ${file.path} ${file.cid}`)
+    console.log("Finished!")
   } catch (error) {
     console.log(error)
   }
 }
 
-pinDirectoryToPinata()
+upload()
