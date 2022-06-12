@@ -53,7 +53,11 @@ yarn
 ```javascript
 node ./src/generate.js
 ```
-- Execute the cli cmd to upload it to IPFS
+- Execute the cli-cmd to run a service on your local machine and allow access to other peers on the network
+```sh
+ipfs daemon
+```
+- Execute the cli-cmd to upload it to IPFS
 ```sh
 ipfs add -r --cid-version=1 "absolutePathToDirectory"
 ```
