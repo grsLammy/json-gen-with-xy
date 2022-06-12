@@ -9,22 +9,24 @@ const httpAPI = process.env.HTTP_API
 const upload = async () => {
   try {
     let ipfs
+    let file
     ipfs = ipfsClient({
       grpc: grpcAPI,
       http: httpAPI,
     })
-    console.log(`Connecting to ${grpcAPI} using ${httpAPI} as fallback`)
+    console.log(`\nConnecting to ${grpcAPI} using ${httpAPI} as fallback`)
     const id = await ipfs.id()
-    console.log(`Daemon active\nID: ${id.id}\n`)
-    for await (const file of ipfs.addAll(streamFiles(), {
+    console.log(`\nDaemon active\nID: ${id.id}\n`)
+    console.log("Uploading files to IPFS...")
+    for await (file of ipfs.addAll(streamFiles(), {
       wrapWithDirectory: true,
-      fileImportConcurrency: 100,
-    }))
-      console.log(`Added file: ${file.path} ${file.cid}`)
-    console.log("\nFinished!")
+    })) {
+    }
+    console.log(`Added file: ${file.path} ${file.cid}`)
+    console.log("\nUpload successfully!")
 
     async function* streamFiles() {
-      let size = 20
+      let size = 100
       for (let i = 0; i < size * size; i++) {
         await new Promise((resolve) => {
           setTimeout(() => resolve(), 100)
