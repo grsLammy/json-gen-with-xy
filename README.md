@@ -57,7 +57,7 @@ node ./src/generate.js
 ```sh
 ipfs daemon
 ```
-- Execute the cli-cmd to upload it to IPFS
+- Execute the cli-cmd to upload your generated metadata json files to the IPFS
 ```sh
 ipfs add -r --cid-version=1 "absolutePathToDirectory"
 ```
