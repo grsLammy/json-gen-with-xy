@@ -4,12 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "run": "node src/generate.js",
-    "upload": "node src/upload.js "
+    "run": "node src/generate.js"
   },
   "dependencies": {
-    "dotenv": "^16.0.1",
-    "fs": "^0.0.1-security",
-    "ipfs-client": "^0.8.1"
+    "fs": "^0.0.1-security"
   }
 }
