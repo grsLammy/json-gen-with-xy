@@ -1,34 +1,45 @@
 "use strict"
-import { streamFiles } from "./util/stream_files"
 import { create as ipfsClient } from "ipfs-client"
+import dotenv from "dotenv"
+dotenv.config()
+
+const grpcAPI = process.env.GRPC_API
+const httpAPI = process.env.HTTP_API
 
 const upload = async () => {
   try {
     let ipfs
-    const grpcAPI = process.env.GRPC_API
-    const httpAPI = process.env.HTTP_API
     ipfs = ipfsClient({
       grpc: grpcAPI,
       http: httpAPI,
     })
-
     console.log(`Connecting to ${grpcAPI} using ${httpAPI} as fallback`)
     const id = await ipfs.id()
-    console.log(`Daemon active\nID: ${id.id}`)
-
+    console.log(`Daemon active\nID: ${id.id}\n`)
     for await (const file of ipfs.addAll(streamFiles(), {
       wrapWithDirectory: true,
-      // this is just to show the interleaving of uploads and progress events
-      // otherwise we'd have to upload 50 files before we see any response from
-      // the server. do not specify this so low in production as you'll have
-      // greatly degraded import performance
-      fileImportConcurrency: 1,
-      progress: (bytes, file) => {
-        console.log(`File progress ${file} ${bytes}`)
-      },
+      fileImportConcurrency: 100,
     }))
       console.log(`Added file: ${file.path} ${file.cid}`)
-    console.log("Finished!")
+    console.log("\nFinished!")
+
+    async function* streamFiles() {
+      let size = 20
+      for (let i = 0; i < size * size; i++) {
+        await new Promise((resolve) => {
+          setTimeout(() => resolve(), 100)
+        })
+        const rawData = {
+          x: i % size,
+          y: Math.floor(i / size),
+        }
+        const dataStream = JSON.stringify(rawData, null, 2)
+        yield {
+          path: `/${i}.json`,
+          content: dataStream,
+        }
+      }
+    }
   } catch (error) {
     console.log(error)
   }
