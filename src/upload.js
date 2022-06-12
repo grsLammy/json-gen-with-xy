@@ -20,13 +20,13 @@ const upload = async () => {
     console.log("Uploading files to IPFS...")
     for await (file of ipfs.addAll(streamFiles(), {
       wrapWithDirectory: true,
-    })) {
-    }
-    console.log(`Added file: ${file.path} ${file.cid}`)
+    }))
+      console.log(`Added file: ${file.path} ${file.cid}`)
     console.log("\nUpload successfully!")
+    console.log(ipfs)
 
     async function* streamFiles() {
-      let size = 100
+      let size = 2
       for (let i = 0; i < size * size; i++) {
         await new Promise((resolve) => {
           setTimeout(() => resolve(), 100)
