@@ -1,4 +1,4 @@
-# GAMESPAD LAND PLOTS METADATA
+# PLOTS METADATA
 
 simple script to generate metadata for 300x300 (90k) plot
 
