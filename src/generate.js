@@ -1,7 +1,7 @@
 "use strict"
 import fs from "fs"
 
-const main = async () => {
+const generate = async () => {
   let size = 300
   const dir = "./plot_metadata"
   try {
@@ -27,4 +27,4 @@ const main = async () => {
   }
 }
 
-main()
+generate()
